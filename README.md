@@ -17,3 +17,6 @@ Sistema personal de inversión en acciones sobre la **API pública de eToro**, p
 
 ## Aviso
 Proyecto personal y experimental. **No es asesoramiento financiero**; operar con dinero real conlleva riesgo de pérdida.
+
+## Licencia
+[MIT](LICENSE).
