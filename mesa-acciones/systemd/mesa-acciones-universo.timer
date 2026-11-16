@@ -1,0 +1,10 @@
+[Unit]
+Description=Mesa acciones: recalcula el universo líquido (programado)
+
+[Timer]
+OnCalendar=Sun 07:00
+Persistent=true
+RandomizedDelaySec=1m
+
+[Install]
+WantedBy=timers.target

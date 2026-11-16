@@ -1,0 +1,77 @@
+{
+  "modo": "lectura",
+  "universo": {
+    "preseleccion_eeuu": 400,
+    "preseleccion_ue": 200,
+    "precio_min": 5,
+    "vol_min_eeuu": 50000000,
+    "vol_min_ue": 10000000,
+    "max_eeuu": 120,
+    "max_ue": 40,
+    "excluir": []
+  },
+  "scout": {
+    "diferencial_max_pct": 0.3,
+    "max_candidatos": 10,
+    "vol_ratio_min": 1.5,
+    "rsi_max": 75,
+    "retroceso_pct": 5.0,
+    "retroceso_rsi_max": 40,
+    "mov_1d_min_pct": 3.0
+  },
+  "comite": {
+    "modelo": "sonnet",
+    "max_por_dia": 18,
+    "max_turnos": 14,
+    "timeout_s": 900,
+    "cuota_5h_max": 60,
+    "cuota_semanal_max": 70,
+    "min_entre_alertas_min": 30,
+    "enfriamiento_horas": 20,
+    "historial_por_simbolo": 3,
+    "max_ventas_por_reunion": 4,
+    "informe_semanal": true
+  },
+  "riesgo": {
+    "comision_compra_usd": 1.0,
+    "comision_venta_usd": 0.2,
+    "conversion_pct": 0.25,
+    "stop_min_pct": 3.0,
+    "stop_max_pct": 15.0,
+    "stop_defecto_pct": 8.0,
+    "objetivo_min_pct": 4.0,
+    "rr_min": 1.2,
+    "importe_min_usd": 25,
+    "max_pct_cartera": 0,
+    "drawdown_max_pct": 25,
+    "colchon_min_usd": 1.0,
+    "colchon_pct": 0.5,
+    "sl_tolerancia_pct": 0.5,
+    "sl_reintento_min": 20
+  },
+  "horario": {
+    "margen_apertura_min": 15,
+    "margen_cierre_min": 10
+  },
+  "frescura": {
+    "precio_max_edad_s": 300,
+    "precio_max_seg": 30,
+    "desvio_max_pct": 1.0
+  },
+  "vigia": {
+    "cada_segundos": 60,
+    "universo_auto": true,
+    "auto_pct": 3.0,
+    "auto_minutos": 60,
+    "auto_enfriamiento_min": 240,
+    "precio_max_edad_s": 600,
+    "pos_cerca_pct": 1.0,
+    "pos_mov_pct": 4.0,
+    "pos_enfriamiento_min": 120
+  },
+  "avisos": {
+    "whatsapp": true,
+    "app": true,
+    "solo_operaciones": true
+  }
+}

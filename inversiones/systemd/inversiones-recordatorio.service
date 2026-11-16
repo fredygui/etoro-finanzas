@@ -1,0 +1,10 @@
+[Unit]
+Description=inversiones: recordatorio de ingreso en eToro (penúltimo día del mes)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/work/inversiones
+EnvironmentFile=-%h/work/inversiones/.env
+ExecStart=%h/work/inversiones/recordatorio.sh

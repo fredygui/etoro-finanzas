@@ -1,0 +1,16 @@
+[Unit]
+Description=inversiones: informe semanal de riesgo y noticias (lo lanza n8n vía inversiones-lanzador)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/work/inversiones
+Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin
+# SEMANAL_ARGS ("", --solo-titular o --prueba) lo escribe el lanzador antes de arrancar la unidad
+EnvironmentFile=-%h/.local/state/inversiones/semanal.env
+ExecStart=%h/work/inversiones/.venv/bin/python -m inversiones.semanal $SEMANAL_ARGS
+# código 2 = terminó con avisos (ranking heurístico, API caída...): no es un fallo de la unidad
+SuccessExitStatus=2
+TimeoutStartSec=1h
+Nice=10

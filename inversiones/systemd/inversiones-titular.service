@@ -1,0 +1,16 @@
+[Unit]
+Description=inversiones: informe completo del titular (primer laborable de la semana, 06:00)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/work/inversiones
+Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin
+EnvironmentFile=-%h/work/inversiones/.env
+# INVERSIONES_ARGS (en .env) permite p. ej. --sin-claude; el propio proceso envía el correo (informe o error)
+# solo el primer laborable de la semana en Madrid y si no hay ya informe esta semana (exit 1 = se omite, no es fallo)
+ExecCondition=%h/work/inversiones/.venv/bin/python -m inversiones.laborable --informe titular
+ExecStart=%h/work/inversiones/.venv/bin/python -m inversiones --perfil titular $INVERSIONES_ARGS
+TimeoutStartSec=5h
+Nice=10

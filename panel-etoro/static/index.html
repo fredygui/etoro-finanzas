@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath d=%27M2 12l4-5 3 3 5-7%27 fill=%27none%27 stroke=%27%230c7d49%27 stroke-width=%272%27/%3E%3C/svg%3E">
+<title>Cartera · eToro</title>
+<script>document.write(`<link rel="stylesheet" href="${location.protocol}//${location.hostname}:8760/ui/ui.css">`)</script>
+<style>
+body{font-variant-numeric:tabular-nums;padding-bottom:var(--l-e5);overflow-x:hidden}
+button{cursor:pointer}
+.ctn{max-width:760px;margin:0 auto;padding:0 var(--l-e4)}
+.gana{color:var(--l-ok)} .pierde{color:var(--l-mal)} .tenue{color:var(--l-tenue)}
+
+/* cabecera */
+header{padding:var(--l-e3) 0 0}
+.fila{display:flex;align-items:center;justify-content:space-between;gap:var(--l-e3)}
+.pildora{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 10px;font-size:var(--l-t-xs);font-weight:600;background:var(--l-ok-suave);color:var(--l-ok)}
+.pildora.lec{background:var(--l-acento-suave);color:var(--l-acento-texto)}
+.pildora i{width:7px;height:7px;border-radius:50%;background:currentColor}
+.valor{font-size:clamp(2.4rem,11vw,3.4rem);font-weight:700;letter-spacing:-.02em;line-height:1.05;margin-top:var(--l-e3)}
+.valor small{font-size:.45em;font-weight:600;color:var(--l-tenue);margin-left:var(--l-e1)}
+.pl{font-size:var(--l-t-l);font-weight:600;margin-top:2px}
+.datos{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--l-e3) var(--l-e4);margin-top:var(--l-e4)}
+.datos div{min-width:0}
+.datos b{display:block;font-size:var(--l-t-l);font-weight:650}
+.datos span{font-size:var(--l-t-xs);color:var(--l-tenue)}
+.freno{grid-column:1/-1}
+.carril{height:8px;border-radius:var(--l-r-s);background:var(--l-mal-suave);position:relative;margin:6px 0 4px;overflow:hidden}
+.carril u{position:absolute;inset:0 auto 0 0;background:var(--l-ok);border-radius:var(--l-r-s);opacity:.85}
+.merc{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:var(--l-e3);font-size:var(--l-t-xs)}
+.merc span{display:inline-flex;align-items:center;gap:6px}
+.merc i{width:8px;height:8px;border-radius:50%;background:var(--l-tenue)}
+.merc .ab i{background:var(--l-ok)}
+.acciones{display:flex;gap:var(--l-e2);margin-top:var(--l-e4)}
+.aviso-err{margin:var(--l-e3) 0}
+.edad{font-size:var(--l-t-xs);color:var(--l-tenue);margin-top:var(--l-e3)}
+.l-pestanas{margin-top:var(--l-e5)}
+
+/* secciones */
+section{display:none}
+section.on{display:block}
+h2{font-size:var(--l-t-xs);font-weight:600;color:var(--l-tenue);margin:var(--l-e4) 0 6px}
+
+/* posiciones */
+.pos{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--l-linea);padding:13px 0 12px;color:inherit}
+.pos:hover{background:var(--l-superficie)}
+.pos .t{display:flex;justify-content:space-between;align-items:baseline;gap:var(--l-e3)}
+.pos .sim{font-size:var(--l-t-l);font-weight:700}
+.pos .imp{color:var(--l-tenue);font-size:var(--l-t-xs);margin-left:var(--l-e2);font-weight:400}
+.pos .pn{font-weight:650;text-align:right}
+.pos .pn small{font-weight:500;font-size:var(--l-t-xs);margin-left:6px}
+.pos .px{font-size:var(--l-t-xs);color:var(--l-tenue);margin-top:1px}
+.etq{display:flex;flex-wrap:wrap;gap:6px;margin-top:var(--l-e2)}
+.etq em{font-style:normal;font-size:var(--l-t-xs);border-radius:var(--l-r-s);padding:1px 8px;background:var(--l-superficie-2);color:var(--l-tenue)}
+.etq em.ok{background:var(--l-ok-suave);color:var(--l-ok)}
+.etq em.av{background:var(--l-acento-suave);color:var(--l-acento-texto)}
+
+/* barra stop-precio-objetivo */
+.rango{position:relative;height:34px;margin-top:var(--l-e2)}
+.rango .via{position:absolute;left:0;right:0;top:15px;height:4px;border-radius:2px;background:var(--l-superficie-2)}
+.rango .sg{position:absolute;top:15px;height:4px}
+.rango .lim{position:absolute;top:8px;width:2px;height:18px;border-radius:1px}
+.rango .ent{position:absolute;top:10px;width:1px;height:14px;background:var(--l-tenue)}
+.rango .pt{position:absolute;top:10px;width:14px;height:14px;margin-left:-7px;border-radius:50%;border:3px solid var(--l-fondo);box-shadow:0 0 0 1.5px currentColor;background:currentColor}
+.rango .nu{position:absolute;top:0;font-size:11px;color:var(--l-tenue);white-space:nowrap}
+.rango .nd{position:absolute;bottom:-2px;font-size:11px;white-space:nowrap}
+.rango.sin .via{background:repeating-linear-gradient(90deg,var(--l-linea) 0 6px,transparent 6px 10px)}
+
+/* comité */
+.cupo{display:flex;gap:var(--l-e4);flex-wrap:wrap;padding:var(--l-e3) 0;border-bottom:1px solid var(--l-linea)}
+.cupo b{font-size:var(--l-t-l);display:block}
+.cupo span{font-size:var(--l-t-xs);color:var(--l-tenue)}
+.reu{border-bottom:1px solid var(--l-linea);padding:13px 0}
+.reu .c{display:flex;justify-content:space-between;gap:var(--l-e2);font-size:var(--l-t-xs);color:var(--l-tenue)}
+.reu p{margin:5px 0 0}
+.dec{display:flex;gap:var(--l-e2);margin-top:var(--l-e2);align-items:flex-start}
+.dec .a{flex:none;min-width:70px;font-size:var(--l-t-xs);font-weight:700;border-radius:var(--l-r-s);padding:1px 6px;text-align:center;background:var(--l-superficie-2)}
+.dec .a.comprar{background:var(--l-ok-suave);color:var(--l-ok)} .dec .a.vender{background:var(--l-mal-suave);color:var(--l-mal)}
+.dec div{font-size:var(--l-t-s);min-width:0;overflow-wrap:anywhere}
+details summary{cursor:pointer;color:var(--l-acento-texto);font-size:var(--l-t-s);margin-top:var(--l-e2)}
+.chat p{font-size:var(--l-t-s);margin:6px 0 0}
+.chat b{font-size:var(--l-t-xs)}
+
+/* operaciones */
+.res{display:flex;gap:18px;padding:var(--l-e3) 0;border-bottom:1px solid var(--l-linea);flex-wrap:wrap}
+.res b{display:block;font-size:var(--l-t-l)}.res span{font-size:var(--l-t-xs);color:var(--l-tenue)}
+.op{display:grid;grid-template-columns:76px 1fr auto;gap:2px var(--l-e3);padding:var(--l-e3) 0;border-bottom:1px solid var(--l-linea);align-items:baseline}
+.op .tp{font-size:var(--l-t-xs);font-weight:700;color:var(--l-tenue)}
+.op .tp.cierre{color:var(--l-info)} .op .tp.compra{color:var(--l-ok)}
+.op .s{font-weight:650}.op .f{grid-column:2/4;font-size:var(--l-t-xs);color:var(--l-tenue)}
+.op .n{text-align:right;font-weight:650}
+
+/* evolución */
+.graf{width:100%;height:auto;display:block;margin-top:var(--l-e2);touch-action:pan-y}
+.graf text{font-size:10px;fill:var(--l-tenue)}
+.rangos{display:flex;gap:6px;margin-top:var(--l-e3)}
+.rangos button,.intervalos button{border:1px solid var(--l-linea);background:none;border-radius:999px;padding:4px 14px;font-size:var(--l-t-xs);font-weight:600;min-height:36px}
+.rangos button[aria-pressed=true],.intervalos button[aria-pressed=true]{background:var(--l-tinta);color:var(--l-fondo);border-color:var(--l-tinta)}
+.leyenda{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:var(--l-t-xs);color:var(--l-tenue);margin-top:var(--l-e2)}
+.leyenda i{display:inline-block;width:14px;border-top:2px solid;vertical-align:middle;margin-right:5px}
+
+/* detalle y confirmación */
+dialog{border:1px solid var(--l-linea);background:var(--l-fondo);color:var(--l-tinta);border-radius:var(--l-r-l);padding:0;width:min(560px,calc(100vw - 16px));max-height:calc(100dvh - 16px)}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+dialog.hoja{margin:auto auto 0;border-radius:var(--l-r-l) var(--l-r-l) 0 0;width:min(640px,100vw);max-height:92dvh;overflow:auto}
+@media(min-width:700px){dialog.hoja{margin:auto;border-radius:var(--l-r-l)}}
+.dlg{padding:var(--l-e4)}
+.dlg h3{font-size:var(--l-t-l)}
+.dlg .cerrar{float:right}
+.intervalos{display:flex;gap:6px;margin:var(--l-e3) 0 0}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:var(--l-e2) 14px;margin-top:var(--l-e3)}
+.kv span{font-size:var(--l-t-xs);color:var(--l-tenue);display:block}.kv b{font-weight:650}
+.tesis{margin-top:var(--l-e4);padding-top:var(--l-e3);border-top:1px solid var(--l-linea);font-size:var(--l-t-s)}
+.tesis p{margin:6px 0 0}
+.pie{display:flex;gap:var(--l-e2);justify-content:flex-end;margin-top:var(--l-e4)}
+.vacio{padding:26px 0;color:var(--l-tenue)}
+@media(prefers-reduced-motion:no-preference){.pt{transition:left .4s}}
+</style>
+<script>(s=>{s.src=`${location.protocol}//${location.hostname}:8760/cuota.js`;s.defer=1;document.head.append(s)})(document.createElement("script"))</script></head>
+<body>
+<header><div class="ctn">
+  <div class="fila"><h1 class="l-rotulo">eToro</h1><span id="modo" class="pildora"><i></i><span>…</span></span></div>
+  <div class="valor" id="valor">…</div>
+  <div class="pl" id="pl"></div>
+  <div class="datos">
+    <div><b id="efectivo">…</b><span>Efectivo disponible</span></div>
+    <div><b id="invertido">…</b><span>Invertido</span></div>
+    <div class="freno"><b id="freno">…</b><div class="carril"><u id="carril"></u></div><span id="frenoTxt"></span></div>
+  </div>
+  <div class="merc" id="merc"></div>
+  <div class="acciones"><button class="l-btn" id="btnPausa" hidden></button><button class="l-btn l-btn--fantasma" id="btnTema">Cambiar tema</button></div>
+  <div class="edad" id="edad"></div>
+  <div id="err"></div>
+</div></header>
+<div class="ctn"><nav class="l-pestanas" role="tablist" id="nav" aria-label="Secciones">
+  <button role="tab" data-s="cartera" aria-selected="true">Cartera</button>
+  <button role="tab" data-s="comite" aria-selected="false">Comité</button>
+  <button role="tab" data-s="ops" aria-selected="false">Operaciones</button>
+  <button role="tab" data-s="evol" aria-selected="false">Evolución</button>
+</nav></div>
+
+<main class="ctn" style="padding-top:var(--l-e2)">
+  <section id="s-cartera" class="on"><h2>Posiciones, de mayor a menor valor</h2><div id="posiciones"></div></section>
+  <section id="s-comite"><div class="cupo" id="cupo"></div><div id="reuniones"></div></section>
+  <section id="s-ops"><div class="res" id="res"></div><div id="ops"></div></section>
+  <section id="s-evol"><h2>Valor de la cuenta</h2>
+    <div class="rangos" id="rangos"></div><svg id="graf" class="graf" viewBox="0 0 360 220" role="img" aria-label="Evolución del valor"></svg>
+    <div class="leyenda"><span><i style="color:var(--acento)"></i>Valor</span><span><i style="color:var(--tenue);border-top-style:dashed"></i>Capital inicial</span><span><i style="color:var(--pierde);border-top-style:dotted"></i>Freno</span></div>
+    <p class="tenue" id="evolNota" style="font-size:13px;margin-top:10px"></p></section>
+</main>
+
+
+<dialog id="detalle" class="hoja"><div class="dlg" id="detCuerpo"></div></dialog>
+<dialog id="confirma"><div class="dlg" id="confCuerpo"></div></dialog>
+
+<script>
+"use strict";
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const num = (n, d = 2) => n == null ? "—" : Number(n).toLocaleString("es-ES", {minimumFractionDigits: d, maximumFractionDigits: d});
+let FX = null; /* EUR/USD: los importes de eToro vienen en $ y se muestran en € */
+const eu = n => n == null ? null : FX ? n / FX : n;
+const eur = (n, d = 2) => n == null ? "—" : num(eu(n), d) + (FX ? " €" : " $");
+const mon = () => FX ? "€" : "$";
+const sg = (n, d = 2) => n == null ? "—" : (n > 0 ? "+" : n < 0 ? "−" : "") + num(Math.abs(n), d);
+const cl = n => n == null || n === 0 ? "" : n > 0 ? "gana" : "pierde";
+const TZ = "Europe/Madrid";
+const fh = t => t ? new Date(t).toLocaleString("es-ES", {timeZone: TZ, day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit"}) : "—";
+const fd = t => t ? new Date(t).toLocaleDateString("es-ES", {timeZone: TZ, day: "2-digit", month: "short"}) : "—";
+const precio = n => n == null ? "—" : num(n, n >= 100 ? 2 : n >= 1 ? 2 : 4);
+let P = null, tab = "cartera";
+
+async function api(u, opt) {
+  const r = await fetch(u, opt);
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.error || r.status);
+  return j;
+}
+
+/* ---------------- tema ---------------- */
+function tema(t) {
+  if (t) document.documentElement.dataset.theme = t === "oscuro" ? "dark" : "light"; else delete document.documentElement.dataset.theme;
+}
+try { const t = localStorage.getItem("tema"); if (t) tema(t); } catch (e) {}
+$("#btnTema").onclick = () => {
+  const oscuro = (document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme:dark)").matches ? "dark" : "light")) === "dark";
+  const n = oscuro ? "claro" : "oscuro"; tema(n);
+  try { localStorage.setItem("tema", n); } catch (e) {}
+  if (tab === "evol") evol(); if (P) pintarPos();
+};
+
+/* ---------------- cabecera ---------------- */
+function cabecera(d) {
+  if (d.eurusd) FX = d.eurusd;
+  $("#err").innerHTML = d.error ? `<div class="l-aviso l-aviso--mal aviso-err">${esc(d.error)}</div>` : "";
+  const m = $("#modo"), real = d.modo === "real";
+  m.className = "pildora" + (real ? "" : " lec");
+  m.lastChild.textContent = real ? "Mesa operando (real)" : d.modo ? "Mesa en lectura" : "Modo desconocido";
+  const b = $("#btnPausa");
+  if (d.modo === "real" || d.modo === "lectura") {
+    b.hidden = false; b.textContent = real ? "Pausar mesa" : "Reanudar mesa"; b.className = "l-btn " + (real ? "l-btn--peligro" : "l-btn--primario");
+  }
+  if (d.error) return;
+  $("#valor").innerHTML = `${num(eu(d.valor))}<small>${mon()}</small>`;
+  $("#pl").innerHTML = d.pl == null ? "" : `<span class="${cl(d.pl)}">${sg(eu(d.pl))} ${mon()} (${sg(d.pl_pct)} %)</span> <span class="tenue" style="font-weight:400;font-size:14px">sobre ${eur(d.capital)} del ${fd(d.capital_desde)}</span>`;
+  $("#efectivo").textContent = eur(d.efectivo);
+  $("#invertido").textContent = eur(d.invertido);
+  if (d.freno_limite != null) {
+    $("#freno").innerHTML = `${eur(d.freno_margen)} <span class="tenue" style="font-weight:400;font-size:14px">hasta el freno</span>`;
+    const tope = d.capital - d.freno_limite, ratio = Math.max(0, Math.min(1, (d.valor - d.freno_limite) / tope));
+    $("#carril").style.width = (ratio * 100) + "%";
+    $("#frenoTxt").textContent = `Freno −${d.freno_pct} % en ${eur(d.freno_limite)}: la cuenta puede caer un ${num(d.freno_margen_pct, 1)} % más antes de que la mesa deje de comprar.`;
+  }
+  $("#merc").innerHTML = d.mercados.map(x => `<span class="${x.abierta ? "ab" : ""}"><i></i>${esc(x.nombre)} ${x.abierta ? "abierta" : "cerrada" + (x.proxima ? ", abre " + fh(x.proxima) : "")}</span>`).join("");
+  $("#edad").textContent = `Actualizado ${fh(d.ahora)}` + (d.edad_datos_s > 90 ? ` · datos de eToro con ${d.edad_datos_s} s` : "");
+}
+
+/* ---------------- posiciones ---------------- */
+function rango(p) {
+  const lo = p.sl_etoro ?? p.stop, hi = p.tp_etoro ?? p.objetivo, px = p.precio, en = p.entrada;
+  if (lo == null && hi == null) return `<div class="rango sin" aria-hidden="true"><div class="via"></div><span class="nd" style="left:0">Sin stop ni objetivo en eToro</span></div>`;
+  const vals = [lo, hi, px, en].filter(v => v != null), mn = Math.min(...vals), mx = Math.max(...vals), pad = (mx - mn) * .06 || 1;
+  const a = mn - pad, w = mx + pad - a, pos = v => Math.max(0, Math.min(100, (v - a) / w * 100));
+  const ganando = px >= en, c = ganando ? "var(--l-ok)" : "var(--l-mal)";
+  const x1 = pos(Math.min(px, en)), x2 = pos(Math.max(px, en));
+  return `<div class="rango" aria-hidden="true"><div class="via"></div>
+    <div class="sg" style="left:${x1}%;width:${x2 - x1}%;background:${c}"></div>
+    ${lo != null ? `<div class="lim" style="left:${pos(lo)}%;background:var(--l-mal)"></div><span class="nu" style="left:${Math.min(pos(lo), 78)}%">stop ${precio(lo)}</span>` : ""}
+    ${hi != null ? `<div class="lim" style="left:${pos(hi)}%;background:var(--l-ok)"></div><span class="nu" style="right:${100 - Math.max(pos(hi), 22)}%">objetivo ${precio(hi)}</span>` : ""}
+    <div class="ent" style="left:${pos(en)}%"></div>
+    <div class="pt" style="left:${pos(px)}%;color:${c}"></div></div>`;
+}
+function etiquetas(p) {
+  const sl = p.sl_etoro != null, tp = p.tp_etoro != null;
+  return `<div class="etq">
+    <em class="${sl && tp ? "ok" : "av"}">${sl && tp ? "SL y TP en eToro" : sl ? "Solo SL en eToro" : tp ? "Solo TP en eToro" : "Sin SL/TP en eToro"}</em>
+    <em class="${p.plan_comite ? "ok" : "av"}">${p.plan_comite ? "Plan del comité" : "Sin plan del comité"}</em>
+    ${p.adoptada ? "<em>Adoptada</em>" : ""}</div>`;
+}
+function pintarPos() {
+  const ps = (P && P.posiciones) || [];
+  $("#posiciones").innerHTML = ps.length ? ps.map(p => `<button class="pos" data-id="${esc(p.id)}">
+    <div class="t"><span><span class="sim">${esc(p.simbolo)}</span><span class="imp">${eur(p.valor)}</span></span>
+      <span class="pn ${cl(p.pnl)}">${sg(eu(p.pnl))} ${mon()}<small>${sg(p.pnl_pct)} %</small></span></div>
+    <div class="px">Entrada ${precio(p.entrada)} · ahora ${precio(p.precio)}</div>
+    ${rango(p)}${etiquetas(p)}</button>`).join("") : `<p class="vacio">Sin posiciones abiertas.</p>`;
+  document.querySelectorAll(".pos").forEach(b => b.onclick = () => detalle(b.dataset.id));
+}
+
+/* ---------------- detalle con velas ---------------- */
+function velas(v, p) {
+  if (!v || v.length < 2) return `<p class="vacio">Sin velas disponibles.</p>`;
+  const W = 360, H = 200, L = 4, R = 46, T = 8, B = 20, n = v.length;
+  let mn = Math.min(...v.map(c => c[3])), mx = Math.max(...v.map(c => c[2]));
+  const rng = mx - mn, niv = [["stop", p.sl_etoro ?? p.stop, "var(--l-mal)"], ["objetivo", p.tp_etoro ?? p.objetivo, "var(--l-ok)"], ["entrada", p.entrada, "var(--l-tenue)"]]
+    .filter(x => x[1] != null && x[1] > mn - rng * .5 && x[1] < mx + rng * .5);
+  niv.forEach(x => { mn = Math.min(mn, x[1]); mx = Math.max(mx, x[1]); });
+  const y = val => T + (mx - val) / (mx - mn || 1) * (H - T - B), bw = (W - L - R) / n, x = i => L + bw * (i + .5);
+  let s = "";
+  for (let i = 0; i < 4; i++) { const val = mn + (mx - mn) * i / 3, libre = niv.every(q => Math.abs(y(q[1]) - y(val)) > 10); s += `<line x1="${L}" x2="${W - R}" y1="${y(val)}" y2="${y(val)}" stroke="var(--l-linea)" stroke-width=".5"/>${libre ? `<text x="${W - R + 3}" y="${y(val) + 3}">${precio(val)}</text>` : ""}`; }
+  v.forEach((c, i) => {
+    const up = c[4] >= c[1], col = up ? "var(--l-ok)" : "var(--l-mal)";
+    s += `<line x1="${x(i)}" x2="${x(i)}" y1="${y(c[2])}" y2="${y(c[3])}" stroke="${col}" stroke-width="1"/>
+      <rect x="${x(i) - Math.max(bw * .35, .6)}" width="${Math.max(bw * .7, 1.2)}" y="${Math.min(y(c[1]), y(c[4]))}" height="${Math.max(Math.abs(y(c[1]) - y(c[4])), .8)}" fill="${col}"/>`;
+  });
+  niv.forEach(([nom, val, col]) => s += `<line x1="${L}" x2="${W - R}" y1="${y(val)}" y2="${y(val)}" stroke="${col}" stroke-width="1" stroke-dasharray="4 3"/><text x="${W - R + 3}" y="${y(val) + 3}" style="fill:${col}">${nom}</text>`);
+  s += `<text x="${L}" y="${H - 5}">${fd(v[0][0])}</text><text x="${W - R}" y="${H - 5}" text-anchor="end">${fd(v[n - 1][0])}</text>`;
+  return `<svg class="graf" viewBox="0 0 ${W} ${H}" role="img" aria-label="Velas de ${esc(p.simbolo)}">${s}</svg>`;
+}
+async function detalle(id, inter = "OneHour") {
+  const p = P.posiciones.find(x => x.id === id); if (!p) return;
+  const t = p.tesis, dlg = $("#detalle");
+  $("#detCuerpo").innerHTML = `<button class="l-btn cerrar" id="cerrarDet">Cerrar</button>
+    <h3>${esc(p.simbolo)}</h3><div class="${cl(p.pnl)}" style="font-weight:650">${sg(eu(p.pnl))} ${mon()} · ${sg(p.pnl_pct)} %</div>
+    <div class="intervalos" id="ints">${[["OneHour", "1 hora"], ["FourHours", "4 horas"], ["OneDay", "1 día"]].map(([k, n]) => `<button data-i="${k}" aria-pressed="${k === inter}">${n}</button>`).join("")}</div>
+    <div id="velas"><p class="vacio">Cargando velas…</p></div>
+    ${rango(p)}${etiquetas(p)}
+    <div class="kv"><div><span>Importe</span><b>${eur(p.importe)}</b></div><div><span>Valor actual</span><b>${eur(p.valor)}</b></div>
+      <div><span>Entrada</span><b>${precio(p.entrada)}</b></div><div><span>Precio</span><b>${precio(p.precio)}</b></div>
+      <div><span>SL en eToro</span><b>${precio(p.sl_etoro)}</b></div><div><span>TP en eToro</span><b>${precio(p.tp_etoro)}</b></div>
+      <div><span>Stop del plan</span><b>${precio(p.stop)}</b></div><div><span>Objetivo del plan</span><b>${precio(p.objetivo)}</b></div>
+      <div><span>Abierta</span><b>${fh(p.abierta)}</b></div></div>
+    <div class="tesis">${t ? `<b>Tesis del comité</b> <span class="tenue">· ${fh(t.fecha)} · ${esc(t.accion)}${t.confianza ? ", confianza " + t.confianza + "/10" : ""}</span>
+      <p>${esc(t.motivo)}</p>${t.alcista ? `<p><b class="gana">A favor.</b> ${esc(t.alcista)}</p>` : ""}${t.bajista ? `<p><b class="pierde">En contra.</b> ${esc(t.bajista)}</p>` : ""}`
+      : `<span class="tenue">El comité aún no ha fijado un plan para esta posición. La convocará en cuanto abra su bolsa.</span>`}</div>`;
+  if (!dlg.open) { dlg.showModal(); history.pushState(null, "", "#cartera/" + encodeURIComponent(id)); document.documentElement.dataset.appAtras = "Cartera"; }
+  $("#cerrarDet").onclick = () => dlg.close();
+  document.querySelectorAll("#ints button").forEach(b => b.onclick = () => detalle(id, b.dataset.i));
+  try { $("#velas").innerHTML = velas(await api(`/api/velas/${p.instrumento}?i=${inter}`), p); }
+  catch (e) { $("#velas").innerHTML = `<p class="vacio">No se pudieron cargar las velas (${esc(e.message)}).</p>`; }
+}
+
+/* ---------------- comité ---------------- */
+async function comite() {
+  const c = P && !P.error ? P : null;
+  if (c) {
+    const q = c.cuota;
+    $("#cupo").innerHTML = `<div><b>${c.comites_hoy} / ${c.max_comites}</b><span>Comités hoy (UTC)</span></div>
+      <div><b>${q ? num(q.h5, 0) + " %" : "—"}</b><span>Cuota Claude 5 h (tope ${c.cuota_max.h5} %)</span></div>
+      <div><b>${q ? num(q.semana, 0) + " %" : "—"}</b><span>Cuota semanal (tope ${c.cuota_max.semana} %)</span></div>`;
+  }
+  try {
+    const a = await api("/api/comite");
+    $("#reuniones").innerHTML = a.length ? a.map(r => `<article class="reu"><div class="c"><span>${fh(r.fecha)}</span><span>${esc(r.tipo)}</span></div>
+      <p><b>${esc(r.motivo)}</b></p>${r.resumen ? `<p class="tenue" style="font-size:14px">${esc(r.resumen)}</p>` : ""}
+      ${r.decisiones.map(d => `<div class="dec"><span class="a ${esc(d.accion)}">${esc(d.accion)}</span><div><b>${esc(d.simbolo)}</b>${d.importe_usd ? " " + eur(d.importe_usd, 0) : ""}${d.confianza ? ` <span class="tenue">(${d.confianza}/10)</span>` : ""}<br>${esc(d.motivo)}</div></div>`).join("")}
+      <details data-id="${esc(r.id)}"><summary>Ver debate completo</summary><div class="chat"></div></details></article>`).join("")
+      : `<p class="vacio">Aún no ha habido ninguna reunión. La primera llegará cuando abra la bolsa de una posición sin plan.</p>`;
+    document.querySelectorAll("#reuniones details").forEach(d => d.addEventListener("toggle", async () => {
+      if (!d.open || d.dataset.ok) return; d.dataset.ok = 1;
+      try { const r = await api("/api/acta/" + d.dataset.id); d.querySelector(".chat").innerHTML = (r.chat || []).map(m => `<p><b>${esc(m.agente)}</b> ${esc(m.mensaje)}</p>`).join("") || "<p>Sin debate registrado.</p>"; }
+      catch (e) { d.querySelector(".chat").textContent = "No se pudo cargar el acta."; }
+    }));
+  } catch (e) { $("#reuniones").innerHTML = `<p class="vacio">No se pudieron cargar las reuniones (${esc(e.message)}).</p>`; }
+}
+
+/* ---------------- operaciones ---------------- */
+async function ops() {
+  try {
+    const o = await api("/api/operaciones");
+    $("#res").innerHTML = `<div><b>${o.n_cerradas}</b><span>Cierres</span></div><div><b>${o.ganadoras}</b><span>Con ganancia</span></div>
+      <div><b class="${cl(o.pnl_realizado)}">${sg(eu(o.pnl_realizado))} ${mon()}</b><span>P/L realizado</span></div><div><b>${fd(o.desde)}</b><span>Desde la adopción</span></div>`;
+    const nom = {cierre: "Cierre", compra: "Compra", "adopción": "En cartera"};
+    $("#ops").innerHTML = o.eventos.length ? o.eventos.map(e => `<div class="op"><span class="tp ${e.tipo}">${nom[e.tipo] || esc(e.tipo)}</span><span class="s">${esc(e.simbolo)} <span class="tenue" style="font-weight:400">${eur(e.importe)}</span></span>
+      <span class="n ${cl(e.pnl)}">${e.tipo === "cierre" ? sg(eu(e.pnl)) + " " + mon() : ""}</span>
+      <span class="f">${fh(e.fecha)} · ${e.tipo === "cierre" ? `${precio(e.entrada)} → ${precio(e.precio)} · ${sg(e.pnl_pct)} % · ${esc(e.motivo || "")}` : `abierta a ${precio(e.precio)}${e.tipo === "adopción" ? " · adoptada por la mesa" : ""}`}</span></div>`).join("")
+      : `<p class="vacio">Sin operaciones todavía.</p>`;
+  } catch (e) { $("#ops").innerHTML = `<p class="vacio">No se pudieron cargar las operaciones (${esc(e.message)}).</p>`; }
+}
+
+/* ---------------- evolución ---------------- */
+let RANGO = 7, HIST = [];
+async function evol() {
+  try { HIST = await api("/api/historial"); } catch (e) { HIST = []; }
+  $("#rangos").innerHTML = [[1, "24 h"], [7, "7 días"], [30, "30 días"]].map(([d, n]) => `<button data-d="${d}" aria-pressed="${d === RANGO}">${n}</button>`).join("");
+  document.querySelectorAll("#rangos button").forEach(b => b.onclick = () => { RANGO = +b.dataset.d; evol(); });
+  const corte = Date.now() - RANGO * 864e5, h = HIST.filter(x => new Date(x.t) >= corte);
+  const svg = $("#graf");
+  if (h.length < 2) { svg.innerHTML = ""; $("#evolNota").textContent = `Hay ${HIST.length} instantánea${HIST.length === 1 ? "" : "s"}. El panel guarda una cada 15 minutos; el gráfico aparece con dos.`; return; }
+  const W = 360, H = 220, L = 6, R = 44, T = 10, B = 22, cap = P && P.capital, fr = P && P.freno_limite;
+  const vs = h.map(x => x.valor); let mn = Math.min(...vs), mx = Math.max(...vs);
+  [cap].forEach(v => { if (v != null) { mn = Math.min(mn, v); mx = Math.max(mx, v); } });
+  if (fr != null && fr > mn - (mx - mn) * 3) mn = Math.min(mn, fr);
+  const pad = (mx - mn) * .08 || 1; mn -= pad; mx += pad;
+  const t0 = new Date(h[0].t).getTime(), t1 = new Date(h[h.length - 1].t).getTime();
+  const x = t => L + (new Date(t).getTime() - t0) / (t1 - t0 || 1) * (W - L - R), y = v => T + (mx - v) / (mx - mn) * (H - T - B);
+  let s = "";
+  for (let i = 0; i < 4; i++) { const v = mn + (mx - mn) * i / 3; s += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--l-linea)" stroke-width=".5"/><text x="${W - R + 3}" y="${y(v) + 3}">${num(eu(v), 0)}</text>`; }
+  if (cap != null) s += `<line x1="${L}" x2="${W - R}" y1="${y(cap)}" y2="${y(cap)}" stroke="var(--l-tenue)" stroke-dasharray="5 3"/>`;
+  if (fr != null && fr >= mn) s += `<line x1="${L}" x2="${W - R}" y1="${y(fr)}" y2="${y(fr)}" stroke="var(--l-mal)" stroke-dasharray="2 3"/>`;
+  const pts = h.map(p => `${x(p.t).toFixed(1)},${y(p.valor).toFixed(1)}`).join(" ");
+  s += `<polygon points="${L},${H - B} ${pts} ${x(h[h.length - 1].t).toFixed(1)},${H - B}" fill="var(--l-info)" opacity=".1"/><polyline points="${pts}" fill="none" stroke="var(--l-info)" stroke-width="1.8" stroke-linejoin="round"/>`;
+  const f = t => new Date(t).toLocaleString("es-ES", {timeZone: TZ, day: "2-digit", month: "short", ...(RANGO === 1 ? {hour: "2-digit", minute: "2-digit"} : {})});
+  s += `<text x="${L}" y="${H - 6}">${f(h[0].t)}</text><text x="${W - R}" y="${H - 6}" text-anchor="end">${f(h[h.length - 1].t)}</text>`;
+  svg.innerHTML = s;
+  const d = h[h.length - 1].valor - h[0].valor;
+  $("#evolNota").innerHTML = `${h.length} instantáneas en el periodo. Variación: <b class="${cl(d)}">${sg(eu(d))} ${mon()}</b>.`;
+}
+
+/* ---------------- pausar / reanudar ---------------- */
+$("#btnPausa").onclick = () => {
+  if (!P) return;
+  const pausar = P.modo === "real", nuevo = pausar ? "lectura" : "real", dlg = $("#confirma");
+  $("#confCuerpo").innerHTML = `<h3>${pausar ? "¿Pausar la mesa?" : "¿Reanudar la mesa?"}</h3>
+    <p style="margin-top:8px">${pausar
+      ? "La mesa pasa a modo lectura: no comprará ni venderá ni cambiará stops y objetivos. Los SL/TP que ya tienen las posiciones en eToro siguen vigentes."
+      : "La mesa vuelve a modo real: podrá comprar, vender y cambiar SL/TP con dinero real de tu cuenta, a partir de su próximo ciclo."}</p>
+    <p class="tenue" id="confErr" style="margin-top:8px;font-size:14px"></p>
+    <div class="pie"><button class="l-btn" id="confNo">Cancelar</button><button class="l-btn ${pausar ? "l-btn--peligro" : "l-btn--primario"}" id="confSi">${pausar ? "Pausar mesa" : "Reanudar mesa"}</button></div>`;
+  dlg.showModal();
+  $("#confNo").onclick = () => dlg.close();
+  $("#confSi").onclick = async () => {
+    $("#confSi").disabled = true;
+    try {
+      await api("/api/modo", {method: "POST", headers: {"X-Panel": "1", "Content-Type": "application/json"}, body: JSON.stringify({modo: nuevo})});
+      dlg.close(); cargar();
+    } catch (e) { $("#confErr").textContent = "No se pudo cambiar el modo: " + e.message; $("#confSi").disabled = false; }
+  };
+};
+
+/* ---------------- navegación y carga ---------------- */
+const SECC = {cartera: "Cartera", comite: "Comité", ops: "Operaciones", evol: "Evolución"};
+function ir(s, push = true) {
+  if (!SECC[s]) s = "cartera";
+  tab = s;
+  document.querySelectorAll("section").forEach(e => e.classList.toggle("on", e.id === "s-" + s));
+  document.querySelectorAll("nav button").forEach(b => b.setAttribute("aria-selected", b.dataset.s === s));
+  const h = document.documentElement;
+  if (s === "cartera") delete h.dataset.appSeccion; else h.dataset.appSeccion = SECC[s];
+  document.title = SECC[s] + " · eToro";
+  if (push) history.pushState(null, "", "#" + s);
+  scrollTo(0, 0);
+  if (s === "comite") comite(); else if (s === "ops") ops(); else if (s === "evol") evol();
+}
+document.querySelectorAll("nav button").forEach(b => b.onclick = () => { if (b.dataset.s !== tab) ir(b.dataset.s); });
+/* el detalle de posición es una vista interna: ‹ y atrás de Android lo cierran */
+$("#detalle").addEventListener("close", () => {
+  delete document.documentElement.dataset.appAtras;
+  if (location.hash.includes("/")) history.back();
+});
+document.addEventListener("app:atras", () => { if ($("#detalle").open) $("#detalle").close(); else history.back(); });
+addEventListener("popstate", () => {
+  const dlg = $("#detalle");
+  if (dlg.open && !location.hash.includes("/")) { dlg.close(); return; }
+  const s = location.hash.slice(1).split("/")[0] || "cartera";
+  if (s !== tab) ir(s, false);
+});
+async function cargar() {
+  try { P = await api("/api/panel"); } catch (e) { P = P || {error: "No se pudo contactar con el panel (" + e.message + ")"}; }
+  cabecera(P); if (!P.error) pintarPos();
+  if (tab === "comite") comite();
+}
+const h0 = location.hash.slice(1).split("/")[0]; if (["comite", "ops", "evol"].includes(h0)) { ir(h0, false); } else history.replaceState(null, "", "#cartera");
+cargar();
+setInterval(() => { if (!document.hidden) cargar(); }, 60000);
+document.addEventListener("visibilitychange", () => { if (!document.hidden) cargar(); });
+</script>
+</body>
+</html>

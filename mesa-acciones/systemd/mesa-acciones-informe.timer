@@ -1,0 +1,10 @@
+[Unit]
+Description=Mesa acciones: resumen del día a la app (solo si hubo operaciones) (programado)
+
+[Timer]
+OnCalendar=Mon..Fri 22:30
+Persistent=true
+RandomizedDelaySec=1m
+
+[Install]
+WantedBy=timers.target

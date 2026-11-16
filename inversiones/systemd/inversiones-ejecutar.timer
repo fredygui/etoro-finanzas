@@ -1,0 +1,10 @@
+[Unit]
+Description=inversiones: ejecución en eToro (primer laborable de la semana en Madrid, 16:00)
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 16:00:00 Europe/Madrid
+Persistent=true
+RandomizedDelaySec=1m
+
+[Install]
+WantedBy=timers.target

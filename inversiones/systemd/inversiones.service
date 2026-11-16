@@ -1,0 +1,14 @@
+[Unit]
+Description=inversiones: informe mensual de eToro de perfil2 e perfil3 (cribado + investigación con claude -p)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/work/inversiones
+Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin
+EnvironmentFile=-%h/work/inversiones/.env
+# INVERSIONES_ARGS (en .env) permite p. ej. --sin-claude; el propio proceso envía el correo (informe o error)
+ExecStart=%h/work/inversiones/.venv/bin/python -m inversiones --perfil perfil2 --perfil perfil3 $INVERSIONES_ARGS
+TimeoutStartSec=5h
+Nice=10

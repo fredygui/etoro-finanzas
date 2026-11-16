@@ -1,0 +1,10 @@
+[Unit]
+Description=Mesa acciones: sincroniza con eToro y reúne al comité si hay posiciones sin plan
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/work/mesa-acciones
+EnvironmentFile=-%h/work/mesa-acciones/.env
+ExecStart=%h/work/mesa-acciones/.venv/bin/python -m mesa_acciones ciclo

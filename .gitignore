@@ -1,0 +1,12 @@
+.env
+*.env
+.venv/
+__pycache__/
+*.pyc
+*.log
+cache/
+data/
+informes/
+cartera*.json
+destinatarios.json
+capturas/

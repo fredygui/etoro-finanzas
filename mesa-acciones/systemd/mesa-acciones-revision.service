@@ -1,0 +1,10 @@
+[Unit]
+Description=Mesa acciones: revisión diaria del comité (Scout + cartera + informe semanal)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/work/mesa-acciones
+EnvironmentFile=-%h/work/mesa-acciones/.env
+ExecStart=%h/work/mesa-acciones/.venv/bin/python -m mesa_acciones revision

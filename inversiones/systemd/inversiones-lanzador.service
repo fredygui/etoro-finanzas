@@ -1,0 +1,13 @@
+[Unit]
+Description=inversiones: lanzador HTTP para n8n (127.0.0.1:5683)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Restart=on-failure
+RestartSec=5
+WorkingDirectory=%h/work/inversiones
+ExecStart=%h/work/inversiones/.venv/bin/python -m inversiones.lanzador
+
+[Install]
+WantedBy=default.target

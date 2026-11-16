@@ -1,0 +1,14 @@
+[Unit]
+Description=Panel eToro (web LAN :8777)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Restart=on-failure
+RestartSec=5
+WorkingDirectory=%h/work/panel-etoro
+EnvironmentFile=-%h/work/panel-etoro/.env
+ExecStart=/home/usuario/work/panel-etoro/.venv/bin/python /home/usuario/work/panel-etoro/server.py 8777
+
+[Install]
+WantedBy=default.target

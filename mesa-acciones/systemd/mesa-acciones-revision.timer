@@ -1,0 +1,10 @@
+[Unit]
+Description=Mesa acciones: revisión horaria del comité (Scout + cartera + informe semanal) (programado)
+
+[Timer]
+OnCalendar=Mon..Fri 09..21:15
+Persistent=true
+RandomizedDelaySec=1m
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,14 @@
+[Unit]
+Description=Mesa acciones: VIGÍA de precios (convoca la mesa por alertas)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Restart=on-failure
+RestartSec=5
+WorkingDirectory=%h/work/mesa-acciones
+EnvironmentFile=-%h/work/mesa-acciones/.env
+ExecStart=%h/work/mesa-acciones/.venv/bin/python -m mesa_acciones vigia servicio
+
+[Install]
+WantedBy=default.target

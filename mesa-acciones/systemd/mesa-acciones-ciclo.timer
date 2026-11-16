@@ -1,0 +1,10 @@
+[Unit]
+Description=Mesa acciones: sincroniza con eToro y reúne al comité si hay posiciones sin plan (programado)
+
+[Timer]
+OnCalendar=Mon..Fri *:0/15
+Persistent=true
+RandomizedDelaySec=1m
+
+[Install]
+WantedBy=timers.target

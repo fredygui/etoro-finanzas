@@ -1,0 +1,10 @@
+[Unit]
+Description=inversiones: informe mensual de perfil2 e perfil3 (día 1, 07:00)
+
+[Timer]
+OnCalendar=*-*-01 07:00:00 Europe/Madrid
+Persistent=true
+Unit=inversiones.service
+
+[Install]
+WantedBy=timers.target

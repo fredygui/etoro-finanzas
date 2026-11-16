@@ -1,0 +1,10 @@
+[Unit]
+Description=inversiones: informe completo del titular (primer laborable de la semana en Madrid, 06:00)
+
+[Timer]
+OnCalendar=Mon..Fri *-*-* 06:00:00 Europe/Madrid
+Persistent=true
+Unit=inversiones-titular.service
+
+[Install]
+WantedBy=timers.target
